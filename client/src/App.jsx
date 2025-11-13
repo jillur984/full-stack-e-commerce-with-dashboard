@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react'
 import Title from './components/Title'
+import Banner from './components/Banner'
 
 const App = () => {
   return (
     <Fragment>
-     <Title>Home Page</Title>
+    <Banner/>
     </Fragment>
   )
 }
