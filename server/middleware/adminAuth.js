@@ -16,7 +16,13 @@ const adminAuth = (req, res,next) => {
     }
 
     const decode_token = jwt.verify(token, process.env.JWT_SECRET);
-    if (decode_token !== process.env.ADMIN_EMAIL + process.env.ADMIN_PASSWORD) {
+
+    console.log("Jillur",decode_token)
+
+    const{isAdmin}=decode_token;
+
+
+    if (!isAdmin) {
       return res.json({
         success: false,
         message: "Not Authorized, Try Again",

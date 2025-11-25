@@ -26,11 +26,11 @@ const App = () => {
         </div>
         <div className='flex-1 px-5 py-5 ml-[18%]'>
           <Routes>
-            <Route path='/' element={<HomePage/>}></Route>
-            <Route path='/add' element={<Add/>}></Route>
-            <Route path='/list' element={<List/>}></Route>
-            <Route path='/orders' element={<Orders/>}></Route>
-            <Route path='/users' element={<Users/>}></Route>
+            <Route path='/' element={<HomePage token={token}/>}></Route>
+            <Route path='/add' element={<Add token={token}/>}></Route>
+            <Route path='/list' element={<List token={token}/>}></Route>
+            <Route path='/orders' element={<Orders token={token}/>}></Route>
+            <Route path='/users' element={<Users token={token}/>}></Route>
 
           </Routes>
         </div>

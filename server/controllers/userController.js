@@ -11,6 +11,7 @@ const createToken = (user) => {
       _id: user._id,
       email: user.email,
       name: user.name,
+      isAdmin:user.isAdmin
     },
     process.env.JWT_SECRET,
     { expiresIn: "1d" }
@@ -19,7 +20,7 @@ const createToken = (user) => {
 
 const userRegister = async (req, res) => {
   try {
-    const { name, email, password } = await req.body;
+    const { name, email, password, isAdmin } = await req.body;
 
     //  console.log(req.body)
 
@@ -63,6 +64,7 @@ const userRegister = async (req, res) => {
       name,
       email,
       password: encryptedPassword,
+      isAdmin,
     });
 
     // saved in database
@@ -118,97 +120,110 @@ const userLogin = async (req, res) => {
   }
 };
 const adminLogin = async (req, res) => {
-  const { email, password } = req.body;
-
-  if (!email) return res.json({ success: false, message: "Email is Required" });
-  if (!password) return res.json({ success: false, message: "Password is Required" });
   try {
-    if(email === process.env.ADMIN_EMAIL && password===process.env.ADMIN_PASSWORD){
-       const token=jwt.sign(email+password,process.env.JWT_SECRET)
-       return res.json({success:true,token:token,message:"Welcome to Super Admin"})
+    const { email, password } = req.body;
+
+    if (!email)
+      return res.json({ success: false, message: "Email is Required" });
+    if (!password)
+      return res.json({ success: false, message: "Password is Required" });
+
+    const user = await userModel.findOne({ email });
+
+    if(!user?.isAdmin){
+      return res.json({success:false,message:"You are Not Authenticate for Login Admin"})
     }
-    else{
-        return res.json({success:false,message:"Invalid Credentials bro"})
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch) {
+      const token = createToken(user);
+      res.json({
+        success: true,
+        token: token,
+        message: "Admin Login Succesfully",
+      });
+    } else {
+      res.json({
+        success: false,
+        message: "Password Invalid, Please try again",
+      });
     }
   } catch (error) {
-    console.log("user Login failed", error);
+    console.log("Admin Login failed", error);
     return res.json({ success: false, message: error?.message });
   }
-
-
 };
-    
-const removeUser = async (req,res) => {
-    try {
-        await userModel.findByIdAndDelete(req.body._id)
-        return res.json({
-            success:true,
-            message:"User Deleted Succsfully"
 
-        })
-    } catch (error) {
-        return res.json({
-            success:false,
-            message:"User Deleted Unsuccesfull"
-        })
-    }
-};
-const updateUser = async (req,res) => {
- try {
-     const{_id,name,email,password}=req.body;
-   
-     const user=await userModel.findById(_id)
-   
-     if(!user){
-       return res.json({success:false,message:"User Not Found By That ID, Please check again"})
-     }
-   
-     if(name) user.name=name;
-     if(email){
-       if(!validator.isEmail(email)){
-       return res.json({
-           success:false,message:"Email is InValid"
-       })
-   
-     }
-   
-       user.email=email;
-     }
-   
-    if(password){
-        if(password.length<8){
-       return res.json({
-           success:false,
-           message:"Password Must Be 8 Character"
-       })
-     }
-     const salt = await bcrypt.genSalt(10);
-       user.password = await bcrypt.hash(password, salt);
-    }
-   
-    
-    await user.save()  
+const removeUser = async (req, res) => {
+  try {
+    await userModel.findByIdAndDelete(req.body._id);
     return res.json({
-       success:true,
-       message:"User Updated Succesfully",
-       user
-    })
-   
- } catch (error) {
-      console.log("user Update Unsuccesfull", error);
+      success: true,
+      message: "User Deleted Succsfully",
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: "User Deleted Unsuccesfull",
+    });
+  }
+};
+const updateUser = async (req, res) => {
+  try {
+    const { _id, name, email, password } = req.body;
+
+    const user = await userModel.findById(_id);
+
+    if (!user) {
+      return res.json({
+        success: false,
+        message: "User Not Found By That ID, Please check again",
+      });
+    }
+
+    if (name) user.name = name;
+    if (email) {
+      if (!validator.isEmail(email)) {
+        return res.json({
+          success: false,
+          message: "Email is InValid",
+        });
+      }
+
+      user.email = email;
+    }
+
+    if (password) {
+      if (password.length < 8) {
+        return res.json({
+          success: false,
+          message: "Password Must Be 8 Character",
+        });
+      }
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+    }
+
+    await user.save();
+    return res.json({
+      success: true,
+      message: "User Updated Succesfully",
+      user,
+    });
+  } catch (error) {
+    console.log("user Update Unsuccesfull", error);
     return res.json({ success: false, message: error?.message });
- }
+  }
 };
 const getUsers = async (req, res) => {
   try {
-    const total=await userModel.countDocuments({})
-    const users=await userModel.find({})
+    const total = await userModel.countDocuments({});
+    const users = await userModel.find({});
     return res.json({
-        success:true,
-        total,
-        users,
-        message:"Users Get Succesfully"
-    })
+      success: true,
+      total,
+      users,
+      message: "Users Get Succesfully",
+    });
   } catch (error) {
     console.log("Could Not Get User", error);
     return res.json({ success: false, message: error?.message });
