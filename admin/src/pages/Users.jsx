@@ -5,11 +5,14 @@ import toast from 'react-hot-toast'
 import { IoMdClose } from 'react-icons/io'
 import { MdDelete } from "react-icons/md";
 import Title from '../components/Title'
+import NewUserForm from '../components/NewUserForm'
 const Users = ({token}) => {
 
   const[userList,setUserList]=useState([])
   const[isLoading,setIsLoading]=useState(false)
-  const[selectedUser,setSelectedUser]=useState("")
+  const[selectedUser,setSelectedUser]=useState(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const [mode,setMode]=useState(null)
 
   const getUserList=async()=>{
     try {
@@ -64,6 +67,21 @@ const Users = ({token}) => {
     }
   }
 
+
+ const handleAdd=()=>{
+  setSelectedUser(null)
+   setIsOpen(true)
+   setMode(mode)
+ }
+
+
+  const handleEdit=(data)=>{
+    setIsOpen(true)
+    setSelectedUser(data)
+    setMode(mode)
+  }
+
+
   return (
     <>
     {
@@ -71,7 +89,7 @@ const Users = ({token}) => {
         <h1>Welcome to User List</h1>
      <div className='flex justify-between items-center max-w-[690px] mb-2'>
           <Title>User List</Title>
-        <button className='bg-slate-500 p-1 px-4'>Add user</button>
+        <button onClick={()=>handleAdd("Add")} className='bg-slate-500 p-1 px-4'>Add user</button>
      </div>
         <div className='max-w-3xl flex flex-col gap-6'>
          <div className='grid grid-cols-[2fr_1fr_1fr] md:grid-cols-[2fr_2fr_1fr_1fr_1fr] items-center py-1 px-2 '>
@@ -79,7 +97,6 @@ const Users = ({token}) => {
            <b>Email</b>
             <b>IsAdmin</b>
            <b>Action</b>
-          
            <b>Edit</b>
          </div>
          {userList.map((user)=>{
@@ -88,9 +105,11 @@ const Users = ({token}) => {
               <p>{user?.name}</p>
               <p>{user?.email}</p>
               {user?.isAdmin ? <p className='text-red-500'>Admin</p> :"User"}
-              <MdDelete onClick={()=>handleDeleteUser(user._id)} className='text-center text-black/80 hover:text-red-800 text-[20px] mx-4'/>
+              <button disabled={user?.isAdmin}>
+                <MdDelete onClick={()=>handleDeleteUser(user._id)} className='text-center text-black/80 hover:text-red-800 text-[20px] mx-4'/>
+              </button>
                 
-              <button className='text-start w-full cursor-pointer mx-1'>Edit</button>
+              <button onClick={()=>handleEdit(user)} className='text-start w-full cursor-pointer mx-1'>Edit</button>
             </div>
           )
          })}
@@ -101,6 +120,7 @@ const Users = ({token}) => {
         </div>
       )
     }
+    <NewUserForm isOpen={isOpen} setIsOpen={setIsOpen} mode={mode} setMode={setMode} selectedUser={selectedUser} setSelectedUser={setSelectedUser} getUserList={getUserList}/>
     </>
   )
 }
