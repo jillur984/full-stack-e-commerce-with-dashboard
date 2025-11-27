@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import dbConnect from "./config/mongoDB.js";
 import userRouter from "./routes/userRouter.js";
+import productRouter from "./routes/productRouter.js";
 dotenv.config();
 const app = express();
 app.use(cors());
@@ -12,6 +13,7 @@ dbConnect();
 const port = process.env.PORT || 9000;
 
 app.use("/api/user", userRouter);
+app.use("/api/product",productRouter)
 
 app.listen(port, () => {
   console.log(`server is running at Port ${port}`);
