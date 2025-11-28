@@ -1,5 +1,7 @@
 import {v2 as cloudinary} from "cloudinary"
+import dotenv from "dotenv";
 
+dotenv.config();
 
 const cloudinaryConnect=cloudinary.config({
     cloud_name:process.env.CLOUDINARY_NAME,
@@ -7,4 +9,4 @@ const cloudinaryConnect=cloudinary.config({
     api_secret:process.env.CLOUDINARY_SECRET_KEY
 })
 
-export {cloudinaryConnect};
+export default cloudinaryConnect;

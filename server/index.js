@@ -4,11 +4,13 @@ import cors from "cors";
 import dbConnect from "./config/mongoDB.js";
 import userRouter from "./routes/userRouter.js";
 import productRouter from "./routes/productRouter.js";
+import  cloudinaryConnect  from "./config/cloudinary.js";
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
 dbConnect();
+
 
 const port = process.env.PORT || 9000;
 
