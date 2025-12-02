@@ -4,7 +4,7 @@ import { cn } from './ui/cn'
 
 export const Label=({htmlFor,className,children})=>{
    return (
-    <label className={cn("font-semibold",className)}>{children}</label>
+    <label className={cn("font-semibold text-sm tracking-tight",className)}>{children}</label>
    )
 }
 
