@@ -18,6 +18,7 @@ const Login = ({setToken}) => {
     const data=response?.data;
     console.log(data)
     if(data){
+      localStorage.setItem("token", data.token);
         setToken(data?.token)
         toast.success(data?.message)
         
