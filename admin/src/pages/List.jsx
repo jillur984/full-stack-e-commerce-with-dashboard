@@ -5,8 +5,10 @@ import toast from "react-hot-toast";
 import Title from "../components/Title";
 import { Link } from "react-router-dom";
 import Loader from "../components/ui/Loader";
+import PriceFormat from "../components/PriceFormat";
+import { IoMdClose } from "react-icons/io";
 
-const List = () => {
+const List = ({token}) => {
   const [loading, setIsLoading] = useState(false);
   const [list, setList] = useState(null);
 
@@ -29,6 +31,35 @@ const List = () => {
   useEffect(() => {
     fetchProductList();
   }, []);
+
+
+
+  const handleRemoveProduct=async(id,item)=>{
+     const confirmRemoval=window.confirm(`Are you want to delete this ${item.name}`)
+     if(confirmRemoval){
+      try {
+        setIsLoading(true)
+        const response=await axios.post(serverUrl + "/api/product/remove",{_id:item?._id},{
+          headers:{token}
+        })
+        const data=response?.data
+        if(data.success){
+          toast.success(data?.message)
+          await fetchProductList()
+        }
+        else{
+          toast.error(data?.message)
+        }
+      } catch (error) {
+        console.log("Product Removal Error",error.message)
+        toast.error(error?.message)
+      }
+      finally{
+        setIsLoading(false)
+      }
+     }
+  }
+
 
   return (
     <div className="">
@@ -68,7 +99,11 @@ const List = () => {
                     <img src={item.images[0]} alt="productImage" className="w-16"/>
                     <p className="line-clamp-1 font-semibold">{item.name}</p>
                     <p>{item.category}</p>
-                    <p>{item.price}</p>
+                    <p><PriceFormat amount={item.price}/></p>
+                    <div className="flex items-center">
+                      <IoMdClose onClick={()=>handleRemoveProduct(item._id,item)} className="flex items-center mx-4 cursor-pointer"/>
+                    </div>
+                    <Link to="/add">Edit</Link>
                     </div>
                   )
                 })
