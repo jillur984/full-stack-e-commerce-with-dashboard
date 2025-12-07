@@ -2,6 +2,11 @@ import { serverUrl } from '@/config'
 import React, { useEffect, useState } from 'react'
 import axios from "axios"
 import Title from './Title'
+import Slider from "react-slick"
+import Product from '@/pages/Product'
+import NextArrow from './NextArrow'
+import PreviousArrow from './PreviousArrow'
+
 
 
 const NewArrival = () => {
@@ -16,6 +21,7 @@ const NewArrival = () => {
         const fetchData=async()=>{
           const response=await axios.get(serverUrl + "/api/product/list")
           const data=response?.data
+
           if(data.success){
             setProducts(data?.products)
             setTotal(data?.total)
@@ -33,15 +39,15 @@ const NewArrival = () => {
       }
   },[])
 
-  console.log("Jillur",products)
+
 
     const settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 4,
     slidesToScroll: 1,
-    // nextArrow: <NextArrow />,
-    // prevArrow: <PreviousArrow />,
+    nextArrow: <NextArrow/>,
+    prevArrow: <PreviousArrow/>,
     responsive: [
       {
         breakpoint: 1025,
@@ -71,10 +77,19 @@ const NewArrival = () => {
   };
 
 
+
   return (
     <div>
-      <div className='py-7'>
+      <div className='py-7 '>
         <Title>New Arrivals</Title>
+        <Slider {...settings} className=''>
+          {
+            products.map((item)=> (
+                <Product key={item._id} productData={item}/>
+              )
+            )
+          }
+        </Slider>
       </div>
     </div>
   )
