@@ -2,12 +2,14 @@ import AddToCart from '@/components/AddToCart'
 import Badge from '@/components/Badge'
 import PriceContainer from '@/components/PriceContainer'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Product = ({productData}) => {
   console.log(productData._id)
+  const productId=productData._id;
   return (
     <div className='w-full group pr-2.5'>
-      <div className=' border border-gray-300 relative rounded-tl-md rounded-tr-md overflow-hidden'>
+      <Link to={`/product/${productId}`} className=' border border-gray-300 relative rounded-tl-md rounded-tr-md overflow-hidden'>
         <div className='w-full  h-70 items-center flex p-3 bg-amber-100 '>
           <img src={productData?.images[0]} alt='productImage' className='w-full h-full hover:scale-110 duration-300 object-cover '/>
         </div>
@@ -19,7 +21,7 @@ const Product = ({productData}) => {
           <PriceContainer item={productData}/>
           <AddToCart/>
         </div>
-      </div>
+      </Link>
     </div>
   )
 }

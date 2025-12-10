@@ -8,6 +8,7 @@ import Contact from './pages/Contact.jsx'
 import Shop from './pages/Shop.jsx'
 import {createBrowserRouter, Router, RouterProvider} from "react-router-dom"
 import RootLayout from './components/layout/RootLayout.jsx'
+import SingleProduct from './pages/SingleProduct'
 
 const router=createBrowserRouter([{
   path:"/",
@@ -33,6 +34,10 @@ const router=createBrowserRouter([{
         {
           path: "/shop",
           element: <Shop />,
+        },
+         {
+          path: "/product/:id",
+          element: <SingleProduct />,
         },
         
   

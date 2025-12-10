@@ -130,16 +130,16 @@ const listProduct = async (req, res) => {
 
 const singleProduct = async (req, res) => {
   try {
-    const { _id } = req.body;
+    const { id } = req.query;
 
-    console.log("ID from FE", _id);
-    const singleProduct = await productModel.findById(_id);
+    console.log("ID from FE", id);
+    const Product = await productModel.findById(id);
 
-    if (singleProduct.length) {
+    if (Product) {
       return res.json({
         success: true,
         message: "Single Product Get Succesfully",
-        singleProduct,
+        Product,
       });
     } else {
       return res.json({
