@@ -3,6 +3,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { serverUrl } from '@/config'
+import ProductInfo from '@/components/ProductInfo'
 
 const SingleProduct = () => {
 
@@ -23,9 +24,10 @@ useEffect(()=>{
           const data=response?.data
           console.log(data)
           if(data.success){
-            
+            setProduct(data?.product)
           
           }
+          
           else{
             console.log("Product Fetching Error",error)
           }
@@ -37,12 +39,21 @@ useEffect(()=>{
       finally{
         setLoading(false)
       }
-  },[])
+  },[id])
 
   return (
-    <Container>
+    <Container className="">
       
-      <h1>Single Product</h1>
+      <div className='grid grid-cols-2 gap-6'>
+        <div className='w-full max-w-[500px] group overflow-hidden rounded-md'>
+   
+        <img src={product?.images[0]} className='w-full h-full group-hover:scale-110 rounded-md'/>
+      </div>
+
+      <div>
+       <ProductInfo product={product}/>
+      </div>
+      </div>
         
     </Container>
   )

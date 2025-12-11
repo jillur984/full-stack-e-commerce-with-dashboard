@@ -133,13 +133,13 @@ const singleProduct = async (req, res) => {
     const { id } = req.query;
 
     console.log("ID from FE", id);
-    const Product = await productModel.findById(id);
+    const product = await productModel.findById(id);
 
-    if (Product) {
+    if (product) {
       return res.json({
         success: true,
         message: "Single Product Get Succesfully",
-        Product,
+        product,
       });
     } else {
       return res.json({
