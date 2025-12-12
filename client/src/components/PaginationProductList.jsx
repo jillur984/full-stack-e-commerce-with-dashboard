@@ -5,9 +5,9 @@ import { serverUrl } from '@/config'
 import axios from 'axios'
 
 const PaginationProductList = () => {
-    const[products,setProducts]=useState(null)
+    const[products,setProducts]=useState([])
     const[loading,setLoading]=useState(false)
-    const[itemsPerPage,setItemsPerPage]=useState(8)
+    const[itemsPerPage,setItemsPerPage]=useState(3)
 
 
     const itemsPerPageFormBanner =(itemsPerPage)=>{
