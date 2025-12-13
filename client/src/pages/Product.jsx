@@ -5,6 +5,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const Product = ({productData}) => {
+
+  
   
   const productId=productData._id;
   return (

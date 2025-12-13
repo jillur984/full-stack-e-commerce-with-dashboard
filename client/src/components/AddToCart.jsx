@@ -1,10 +1,21 @@
 import React from 'react'
 import toast from 'react-hot-toast'
+import { useSelector, useDispatch } from 'react-redux'
+import { addToCart } from '@/redux/cartSlice'
+
+
+
+
 
 
 const AddToCart = ({item,className}) => {
+
+  
+
+  const dispatch=useDispatch()
   const handleAddToCart=()=>{
-    toast.success(`${item?.name} is Clicked`)
+    dispatch(addToCart(item))
+    toast.success(`${item?.name} Added Succesfully`)
   }
 
   return (
