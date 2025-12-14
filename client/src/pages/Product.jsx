@@ -6,8 +6,6 @@ import { Link } from 'react-router-dom'
 
 const Product = ({productData}) => {
 
-  
-  
   const productId=productData._id;
   return (
     <div className='w-full group pr-2.5 relative '>
