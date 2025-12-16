@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 const Header = () => {
   const cartProducts = useSelector((state) => state.cart.products);
 
-  console.log("Products come from Header", cartProducts);
+  // console.log("Products come from Header", cartProducts);
 
   return (
     <div className="border-b-[1px] border-slate-300">
@@ -36,7 +36,7 @@ const Header = () => {
           <button className="relative group text-[20px]">
             <FaShoppingCart />
            <Link to="/cart">
-             <span className="absolute  top-0 left-3 text-red-300">
+             <span className="absolute  top-0 left-3 text-red-600">
               {cartProducts.length ? cartProducts.length : "0"}
             </span>
            </Link>

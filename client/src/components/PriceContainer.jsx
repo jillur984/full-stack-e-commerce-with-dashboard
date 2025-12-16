@@ -3,7 +3,7 @@ import PriceFormat from "./PriceFormat";
 import { useSelector } from "react-redux";
 
 const PriceContainer = ({ item }) => {
-  console.log(item?.discountPercentage);
+  // console.log(item?.discountPercentage);
 
   const { products } = useSelector((state) => state.cart);
   const [cartProduct, setCartProduct] = useState(null);
@@ -18,7 +18,7 @@ const PriceContainer = ({ item }) => {
     setCartProduct(existingProduct || null);
   }, [products, item]);
 
-  console.log("Products from Price container", cartProduct);
+  // console.log("Products from Price container", cartProduct);
   const regularPrice = cartProduct
     ? cartProduct.quantity * item?.price
     : item?.price;

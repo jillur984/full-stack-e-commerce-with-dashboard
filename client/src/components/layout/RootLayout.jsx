@@ -12,7 +12,7 @@ const RootLayout = () => {
   return (
     <Fragment>
     <Provider store={store}>
-        <PersistGate persistor={persistor}>
+        <PersistGate loading={null} persistor={persistor}>
           <Header/>
         <Outlet/>
         <ServiceTag/>

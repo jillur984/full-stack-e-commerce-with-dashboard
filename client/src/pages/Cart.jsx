@@ -14,16 +14,16 @@ const Cart = () => {
     setCartProduct(products || null);
   }, [products]);
 
-  console.log("Cart Product", products);
+  // console.log("Cart Product", products);
 
-  console.log(Array.isArray(cartProduct));
+  // console.log(Array.isArray(cartProduct));
 
   return (
     <Container>
       {cartProduct.length > 0 ? (
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-4 bg-slate-100 p-2">
-            <h2>Product</h2>
+          <div className="grid grid-cols-1 md:grid-cols-5 bg-slate-100  p-2">
+            <h2 className="col-span-2">Product</h2>
             <h2>Price</h2>
             <h2>quantity</h2>
             <h2>Sub Total</h2>
@@ -31,7 +31,7 @@ const Cart = () => {
 
           <div>
             {products?.map((item) => (
-              <div>
+              <div key={item._id}>
                 <CartProduct key={item?._id} item={item} />
               </div>
             ))}

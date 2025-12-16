@@ -1,9 +1,19 @@
-import React from 'react'
+import React from "react";
+import { ImCross } from "react-icons/im";
 
-const CartProduct = ({item}) => {
+const CartProduct = ({ item }) => {
   return (
-    <div>{item?.price}</div>
-  )
-}
+    <div>
+      <div className="w-full mb-4">
+        <div className="flex col-end-2 p-4 gap-4 items-center">
+          <ImCross />
+                  <img src={item?.images[0]} alt="productImage" className="w-32 h-32 object-contain" />
+        </div>
 
-export default CartProduct
+
+      </div>
+    </div>
+  );
+};
+
+export default CartProduct;

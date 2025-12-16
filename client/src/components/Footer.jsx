@@ -147,7 +147,7 @@ const Footer = () => {
             ) : (
               <div className="space-y-3">
                 <div>
-                  <inpu
+                  <input
                     className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent transition-all duration-200 text-sm"
                     type="email"
                     placeholder="Enter your email"
