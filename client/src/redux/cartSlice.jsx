@@ -28,16 +28,8 @@ export const cartSlice = createSlice({
         existingProduct.quantity--;
       }
     },
-    descreaseCart: (state, action) => {
-      const productId = action.payload;
-
-      const existingProduct = state.products.find((item) => item._id === productId);
-      if (existingProduct) {
-        existingProduct.quantity--;
-      }
-    },
     deleteProduct:(state,action)=>{
-        state.products.filter((item)=>item._id!===action.payload)
+        state.products.filter((item)=>item._id!==action.payload)
     },
     resetCart:(state)=>{
         state.products=[]

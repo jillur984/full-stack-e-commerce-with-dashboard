@@ -18,13 +18,24 @@ const AddToCart = ({ item, className }) => {
   const [cartProduct,setCartProduct]=useState(null)
   
 
-  useEffect(()=>{
-   const existingProduct=products.find((product)=>product._id===item._id)
-   console.log("Hello Existing Product",existingProduct)
+  // useEffect(()=>{
+
+  //  const existingProduct=products.find((product)=>product._id===item._id)
+  //  console.log("Hello Existing Product",existingProduct)
    
-    setCartProduct(existingProduct)
+  //   setCartProduct(existingProduct)
    
-  },[products,item])
+  // },[products,item])
+
+  useEffect(() => {
+  if (!item || !products?.length) return;
+
+  const existingProduct = products.find(
+    (product) => product && product._id === item._id
+  );
+
+  setCartProduct(existingProduct || null);
+}, [products, item]);
 
 
   const increaseQuantity=(id)=>{
