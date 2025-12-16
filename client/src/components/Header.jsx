@@ -35,9 +35,11 @@ const Header = () => {
           })}
           <button className="relative group text-[20px]">
             <FaShoppingCart />
-            <span className="absolute  top-0 left-3 text-red-300">
+           <Link to="/cart">
+             <span className="absolute  top-0 left-3 text-red-300">
               {cartProducts.length ? cartProducts.length : "0"}
             </span>
+           </Link>
           </button>
           <button>
             <FaUserAlt />

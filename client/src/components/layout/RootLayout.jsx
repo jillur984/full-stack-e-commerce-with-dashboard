@@ -5,13 +5,15 @@ import ServiceTag from '../ServiceTag'
 import Footer from '../Footer'
 import {Toaster} from "react-hot-toast"
 import { Provider } from 'react-redux'
-import { store } from '@/redux/store'
+import { persistor, store } from '@/redux/store'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const RootLayout = () => {
   return (
     <Fragment>
     <Provider store={store}>
-        <Header/>
+        <PersistGate persistor={persistor}>
+          <Header/>
         <Outlet/>
         <ServiceTag/>
         <Footer/>
@@ -21,6 +23,7 @@ const RootLayout = () => {
         color:"#ffffff"
       }
     }}/>
+        </PersistGate>
     </Provider>
     </Fragment>
   )
