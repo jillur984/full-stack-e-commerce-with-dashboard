@@ -9,6 +9,8 @@ import Shop from './pages/Shop.jsx'
 import {createBrowserRouter, Router, RouterProvider} from "react-router-dom"
 import RootLayout from './components/layout/RootLayout.jsx'
 import SingleProduct from './pages/SingleProduct'
+import Signin from './pages/Signin'
+import Signup from './pages/Signup'
 
 const router=createBrowserRouter([{
   path:"/",
@@ -38,6 +40,14 @@ const router=createBrowserRouter([{
          {
           path: "/product/:id",
           element: <SingleProduct />,
+        },
+        {
+          path: "/signin",
+          element: <Signin />,
+        },
+         {
+          path: "/signup",
+          element: <Signup />,
         },
         
   

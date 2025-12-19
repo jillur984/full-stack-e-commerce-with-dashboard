@@ -41,9 +41,9 @@ const Header = () => {
             </span>
            </Link>
           </button>
-          <button>
+          <Link to="/signin">
             <FaUserAlt />
-          </button>
+          </Link>
         </div>
       </Container>
     </div>

@@ -4,15 +4,37 @@ import PriceContainer from "@/components/PriceContainer";
 import PriceFormat from "@/components/PriceFormat";
 import { resetCart } from "@/redux/cartSlice";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 const Cart = () => {
   const { products } = useSelector((state) => state.cart);
-
+  const[subTotal,setSubTotal]=useState(null)
+  const[total,setTotal]=useState(null)
   const [cartProduct, setCartProduct] = useState([]);
 
   const dispatch = useDispatch();
+
+
+  useEffect(()=>{
+    
+    let subTotal=0;
+    let totalDiscount=0;
+
+
+    products.map((item)=>{
+      const itemTotal=item?.price*item?.quantity
+      const itemDiscount=(item?.price*item?.discountPercentage)/100*item?.quantity
+
+      subTotal+=itemTotal;
+      totalDiscount+=itemDiscount
+    })
+
+    setTotal(subTotal-totalDiscount)
+    setSubTotal(subTotal)
+
+  },[products])
 
   useEffect(() => {
     if (!products) return;
@@ -30,6 +52,9 @@ const Cart = () => {
       dispatch(resetCart());
     }
   };
+
+
+
 
   return (
     <Container>
@@ -60,19 +85,19 @@ const Cart = () => {
               <div className="border-t">
                 <div className="flex border-b items-center gap-8 justify-between">
                   <p>Subtotal</p>
-                  <PriceFormat amount={500} />
+                  <PriceFormat amount={subTotal} />
                 </div>
                 <div className="flex border-t border-b items-center gap-8 justify-between">
                   <p>Discount</p>
-                  <PriceFormat amount={500} />
+                  <PriceFormat amount={subTotal-total} />
                 </div>
                 <div className="flex font-bold items-center gap-8 justify-between">
                   <p>Total</p>
-                  <PriceFormat amount={400} />
+                  <PriceFormat amount={total}  />
                 </div>
               </div>
 
-               <button className="bg-green-500 flex justify-end p-2 px-5 mt-10 rounded-md">
+               <button onClick={()=>toast.success("Payment will process shortly")} className="bg-green-500 flex justify-end p-2 px-5 mt-10 rounded-md">
               Process to checkout
             </button>
             </div>
