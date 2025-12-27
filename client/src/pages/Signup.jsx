@@ -47,12 +47,27 @@ const Signup = ({className}) => {
      setErrorPassword("")
   }
 
+  const emaiValidation=(email)=>{
+    return String(email).toLowerCase().match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+  }
   
   const handleSignUp=async(e)=>{
      e.preventDefault()
      if(!clientName){
       setErrorClientName("Enter your Name")
      }
+     if(!email){
+      setErrorEmail("Enter your Email")
+     }
+     else{
+       if(!emaiValidation(email)){
+        setErrorEmail("Enter a Valid Email")
+       }
+     }
+     if(!password){
+      setErrorPassword("Enter your Passord")
+     }
+     
   }
   
 
@@ -71,10 +86,16 @@ const Signup = ({className}) => {
           <Label htmlFor="email" className="font-normal">Work Email</Label>
           <Input placeholder="Enter your Email" type="email" value={email} onChange={handleEmail}/>
         </div>
+        {
+          errorEmail && <p className='text-red'>{errorEmail}</p>
+        }
         <div className='flex gap-2 items-center '>
           <Label htmlFor="password" className="font-normal">Work Password</Label>
           <Input className="border" placeholder="Enter your Password" type="password" value={password} onChange={handlePassword}/>
         </div>
+        {
+          errorPassword && <p className='text-red'>{errorPassword}</p>
+        }
         <div className='flex items-center gap-2'>
           <input type='checkbox'/>
           <p>I agree to Items of service and privacy ploicy</p>
